@@ -1,0 +1,67 @@
+Starting Assignment2Network...
+Initialising...
+Topology file: examples/org/cloudbus/cloudsim/examples/network/assignment2_topology.brite
+Starting CloudSim version 3.0
+Datacenter_0 is starting...
+Datacenter_1 is starting...
+Datacenter_2 is starting...
+Broker1 is starting...
+Broker2 is starting...
+Broker3 is starting...
+Entities started.
+0.0: Broker1: Cloud Resource List received with 3 resource(s)
+0.0: Broker2: Cloud Resource List received with 3 resource(s)
+0.0: Broker3: Cloud Resource List received with 3 resource(s)
+9.199999809265137: Broker2: Trying to Create VM #0 in Datacenter_0
+11.399999618530273: Broker3: Trying to Create VM #0 in Datacenter_0
+13.800000190734863: Broker1: Trying to Create VM #0 in Datacenter_0
+[VmScheduler.vmCreate] Allocation of VM #0 to Host #0 failed by MIPS
+[VmScheduler.vmCreate] Allocation of VM #0 to Host #0 failed by MIPS
+18.499999618530275: Broker2: VM #0 has been created in Datacenter #2, Host #0
+18.499999618530275: Broker2: Sending cloudlet 0 to VM #0
+21.299999809265138: Broker3: Creation of VM #0 failed in Datacenter #2
+21.299999809265138: Broker3: Trying to Create VM #0 in Datacenter_1
+21.700000381469728: Broker1: Creation of VM #0 failed in Datacenter #2
+21.700000381469728: Broker1: Trying to Create VM #0 in Datacenter_1
+[VmScheduler.vmCreate] Allocation of VM #0 to Host #0 failed by MIPS
+28.999999713897708: Broker3: VM #0 has been created in Datacenter #3, Host #0
+28.999999713897708: Broker3: Sending cloudlet 0 to VM #0
+31.80000038146973: Broker1: Creation of VM #0 failed in Datacenter #3
+31.80000038146973: Broker1: Trying to Create VM #0 in Datacenter_2
+45.700000572204594: Broker1: VM #0 has been created in Datacenter #4, Host #0
+45.700000572204594: Broker1: Sending cloudlet 0 to VM #0
+187.6999994277954: Broker2: Cloudlet 0 received
+187.6999994277954: Broker2: All Cloudlets executed. Finishing...
+187.6999994277954: Broker2: Destroying VM #0
+Broker2 is shutting down...
+196.59999961853026: Broker3: Cloudlet 0 received
+196.59999961853026: Broker3: All Cloudlets executed. Finishing...
+196.59999961853026: Broker3: Destroying VM #0
+Broker3 is shutting down...
+219.50000076293946: Broker1: Cloudlet 0 received
+219.50000076293946: Broker1: All Cloudlets executed. Finishing...
+219.50000076293946: Broker1: Destroying VM #0
+Broker1 is shutting down...
+Simulation: No more future events
+CloudInformationService: Notify all CloudSim entities for shutting down.
+Datacenter_0 is shutting down...
+Datacenter_1 is shutting down...
+Datacenter_2 is shutting down...
+Broker1 is shutting down...
+Broker2 is shutting down...
+Broker3 is shutting down...
+Simulation completed.
+Simulation completed.
+=============> Broker 5
+========== OUTPUT ==========
+Cloudlet ID    STATUS    Data center ID    VM ID    Time    Start Time    Finish Time
+    0        SUCCESS        4            0        160        52.6        212.6
+=============> Broker 6
+========== OUTPUT ==========
+Cloudlet ID    STATUS    Data center ID    VM ID    Time    Start Time    Finish Time
+    0        SUCCESS        2            0        160        23.1        183.1
+=============> Broker 7
+========== OUTPUT ==========
+Cloudlet ID    STATUS    Data center ID    VM ID    Time    Start Time    Finish Time
+    0        SUCCESS        3            0        160        32.8        192.8
+Assignment2Network finished!

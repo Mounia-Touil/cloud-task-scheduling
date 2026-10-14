@@ -1,0 +1,51 @@
+So I ran the Assignment2Network file and the simulation finished without issues. We got 3 datacenters, 3 brokers, 3 VMs (one per broker), and 3 cloudlets.
+The topology comes from assignment2_topology.brite which has 10 nodes and 20 edges.
+Mapping I used in the code:
+
+Datacenter_0 -> BRITE node 0
+Datacenter_1 -> BRITE node 2
+Datacenter_2 -> BRITE node 7
+Broker1 -> BRITE node 3
+Broker2 -> BRITE node 5
+Broker3 -> BRITE node 9
+
+Some important delay values I pulled from the topology shortest paths:
+
+Broker2(5) to DC0(0) = 4.6
+Broker3(9) to DC0(0) = 4.9
+Broker1(3) to DC0(0) = 3.9
+Broker3(9) to DC1(2) = 3.8
+Broker1(3) to DC1(2) = 5.0
+Broker1(3) to DC2(7) = 6.9
+
+Why the timestamps ended up the way they did
+1) The ~9.2, 11.4, 13.8 marks — brokers trying to create VMs in Datacenter_0
+This happens after all the message exchanges and event queue processing gets done. They're not all at the same time because each broker has a different network path, and also CloudSim processes events one at a time in order so theres a natural stagger.
+2) Why you see the VM creation failed lines
+Each datacenter only has 1 host with VmSchedulerSpaceShared and 1 PE. SpaceShared basically means only one VM can use that PE at a time, so when multiple brokers try to grab it at once, only one wins. Broker2 gets its VM first in Datacenter_0 (time 18.5), then Broker3 and Broker1 both fail there since its already taken. Broker3 then retries on Datacenter_1 and gets it (29.0), Broker1 tries there too but shows up a bit later and fails again. Eventually Broker1 retries on Datacenter_2 and succeeds at 45.7.
+So the VM failures are actually expected, its just resource contention doing its thing.
+3) Why cloudlet start times are 23.1, 32.8, and 52.6
+After VM creation each broker sends the cloudlet to its VM. The start time is basically just send time + one-way network delay from broker to datacenter:
+
+Broker2: 18.5 + 4.6 (delay 5->0) = ~23.1
+Broker3: 29.0 + 3.8 (delay 9->2) = ~32.8
+Broker1: 45.7 + 6.9 (delay 3->7) = ~52.6
+
+These line up exactly with the output.
+4) Why finish times are 183.1, 192.8, and 212.6
+Cloudlet length is 40000 and VM mips is 250, so execution time = 40000 / 250 = 160. Just add that to each start time:
+
+23.1 + 160 = 183.1
+32.8 + 160 = 192.8
+52.6 + 160 = 212.6
+
+Matches the output again.
+5) Why broker receive times are 187.7, 196.6, and 219.5
+Receive time = finish time + return delay going back from datacenter to broker:
+
+Broker2: 183.1 + 4.6 = 187.7
+Broker3: 192.8 + 3.8 = 196.6
+Broker1: 212.6 + 6.9 = 219.5
+
+The different timestamps come down to network delay + event scheduling + VM contention all happening together. 
+The failure of VM is normal since multiple brokers are trying to go for the first datacenter first.
